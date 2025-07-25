@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url('https://www.shutterstock.com/image-photo/group-pets-posing-together-dog-600nw-2518087139.jpg') no-repeat center center/cover;
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+    
+    .seller-container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(255, 255, 255, 0.3);
+      text-align: center;
+      max-width: 600px;
+      width: 90%;
+      height: auto;
+      min-height: 400px;
+      backdrop-filter: blur(15px);
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      opacity: 0;
+      transform: scale(0.9);
+      animation: popUp 0.5s ease-out forwards;
+    }
+    
+    @keyframes popUp {
+      0% { opacity: 0; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    h2 {
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.7);
+      font-weight: 700;
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    
+    input, textarea {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      transition: 0.3s;
+      background: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+    
+    input:focus, textarea:focus {
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    }
+    
+    #imagePreview {
+      width: 100%;
+      height: 150px;
+      background: #222;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: 0.3s;
+      color: white;
+      font-size: 0.8rem;
+    }
+    
+    #imagePreview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    
+    button {
+      padding: 0.6rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #ffcc66, #ff9900);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+    
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 8px 20px rgba(255, 165, 0, 0.8);
+    }
+    
+    .success-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0px 8px 16px rgba(255, 255, 255, 0.3);
+      text-align: center;
+      animation: fadeInOut 2s ease-in-out;
+    }
+    
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="seller-container">
+    <h2>List Your Pet</h2>
+    <form id="petForm">
+      <label for="petName">Pet Name:</label>
+      <input type="text" id="petName" required>
+      
+      <label for="petType">Pet Type:</label>
+      <input type="text" id="petType" required>
+      
+      <label for="petDescription">Description:</label>
+      <textarea id="petDescription" rows="3" required></textarea>
+      
+      <label for="petImageUrl">Image URL:</label>
+      <input type="url" id="petImageUrl" placeholder="Enter image URL (e.g., https://example.com/pet.jpg)" required>
+      
+      <div id="imagePreview">Image Preview</div>
+      
+      <button type="submit">List Pet</button>
+    </form>
+  </div>
+
+  <div class="success-popup" id="successPopup">Pet Listed Successfully!</div>
+
+  <script>
+    // Preview image when URL changes
+    document.getElementById("petImageUrl").addEventListener("input", function() {
+      const preview = document.getElementById("imagePreview");
+      const imageUrl = this.value.trim();
+      
+      if (imageUrl) {
+        preview.innerHTML = `<img src="${imageUrl}" alt="Pet Image Preview" onerror="this.parentNode.innerHTML='Invalid Image URL'">`;
+        preview.querySelector("img").style.display = "block";
+      } else {
+        preview.innerHTML = "Image Preview";
+      }
+    });
+    
+    document.getElementById("petForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      
+      // Get form values
+      const petName = document.getElementById("petName").value;
+      const petType = document.getElementById("petType").value;
+      const petDescription = document.getElementById("petDescription").value;
+      const imageUrl = document.getElementById("petImageUrl").value;
+      
+      // Get existing pets or create new array
+      let pets = JSON.parse(localStorage.getItem("pets")) || [];
+      
+      // Create new pet object
+      const newPet = {
+        name: petName,
+        type: petType,
+        description: petDescription,
+        image: imageUrl || 'https://via.placeholder.com/150'
+      };
+      
+      // Add to pets array
+      pets.push(newPet);
+      
+      // Save back to localStorage
+      localStorage.setItem("pets", JSON.stringify(pets));
+      
+      // Show success message
+      document.getElementById("successPopup").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("successPopup").style.display = "none";
+      }, 2000);
+      
+      // Reset form
+      this.reset();
+      document.getElementById("imagePreview").innerHTML = "Image Preview";
+    });
+  </script>
+</body>
+</html>

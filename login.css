@@ -1,0 +1,109 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: url('https://www.doggies.com/blog/wp-content/uploads/2017/10/pet-montage-1024x1024.jpg') no-repeat center center;
+  background-size: 150%;
+  animation: fadeIn 1.5s ease-in-out;
+  backdrop-filter: blur(8px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.buyer-container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 90%;
+  width: 100%;
+  transition: transform 0.3s;
+  background-image: url('https://c8.alamy.com/comp/2EXTNTH/pet-paw-pattern-animal-background-with-god-cat-paws-pet-steps-seamless-texture-seamless-footstep-pattern-pet-paw-animal-dog-and-cat-illustration-2EXTNTH.jpg');
+  background-size: cover;
+  background-position: center;
+  animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.buyer-container:hover {
+  transform: scale(1.02);
+}
+
+h2 {
+  margin-bottom: 2rem;
+  color: #333;
+  font-size: 2rem;
+}
+
+#petList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.pet-item {
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  flex: 1 1 calc(30% - 1rem);
+  max-width: calc(30% - 1rem);
+  box-sizing: border-box;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pet-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.adopt-btn {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.adopt-btn:hover {
+  background: #45a049;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .pet-item {
+    flex: 1 1 calc(45% - 1rem);
+    max-width: calc(45% - 1rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .pet-item {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+
+.error-message {
+  color: #d9534f;
+  margin: 10px 0;
+  font-size: 0.9rem;
+  min-height: 20px;
+  text-align: center;
+}

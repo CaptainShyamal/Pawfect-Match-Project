@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="register.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('https://www.doggies.com/blog/wp-content/uploads/2017/10/pet-montage-1024x1024.jpg') no-repeat top center/cover;
+      backdrop-filter: blur(8px);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .register-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      animation: slideIn 1s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      color: #2c3e50;
+      font-size: 2rem;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    label {
+      text-align: left;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #34495e;
+    }
+
+    input {
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: box-shadow 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 10px rgba(52, 152, 219, 0.6);
+    }
+
+    button {
+      padding: 0.75rem;
+      background: linear-gradient(135deg, #4CAF50, #2ecc71);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.5s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #45a049, #27ae60);
+    }
+
+    p {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: #2c3e50;
+    }
+
+    a {
+      color: #007BFF;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" required>
+
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="../login/login.html">Login here</a></p>
+  </div>
+
+  <script src="register.js"></script>
+</body>
+</html>

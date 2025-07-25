@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Pets</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffcc66, #ff9966);
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    #pets-list {
+      margin-bottom: 1.5rem;
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .pet-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f4f4f4;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .pet-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .pet-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex-grow: 1;
+    }
+
+    .pet-name {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .pet-type {
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .pet-image-preview {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .remove-btn {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .remove-btn:hover {
+      transform: scale(1.1);
+      background: #cc0000;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    button[type="submit"] {
+      padding: 12px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+
+    button[type="submit"]:hover {
+      transform: scale(1.02);
+      background: #388E3C;
+    }
+
+    .empty-state {
+      color: #666;
+      font-style: italic;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Manage Pets</h2>
+    <div id="pets-list">
+      <!-- Pets will be dynamically added here -->
+    </div>
+    <form id="add-pet-form">
+      <div class="form-group">
+        <label for="pet-name">Pet Name</label>
+        <input type="text" id="pet-name" placeholder="Enter pet name" required>
+      </div>
+      <div class="form-group">
+        <label for="pet-type">Pet Type</label>
+        <input type="text" id="pet-type" placeholder="Enter pet type (dog, cat, etc.)" required>
+      </div>
+      <div class="form-group">
+        <label for="pet-image">Image URL</label>
+        <input type="text" id="pet-image" placeholder="Enter image URL" required>
+      </div>
+      <button type="submit">Add Pet</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const petsList = document.getElementById("pets-list");
+      const addPetForm = document.getElementById("add-pet-form");
+      
+      // Load pets from localStorage
+      let pets = JSON.parse(localStorage.getItem("pets")) || [];
+      
+      // Display pets
+      function displayPets() {
+        petsList.innerHTML = '';
+        
+        if (pets.length === 0) {
+          petsList.innerHTML = '<div class="empty-state">No pets added yet</div>';
+          return;
+        }
+        
+        pets.forEach((pet, index) => {
+          const petItem = document.createElement("div");
+          petItem.className = "pet-item";
+          petItem.innerHTML = `
+            <img src="${pet.image || 'https://via.placeholder.com/50'}" alt="${pet.name}" class="pet-image-preview">
+            <div class="pet-info">
+              <span class="pet-name">${pet.name}</span>
+              <span class="pet-type">${pet.type}</span>
+            </div>
+            <button class="remove-btn" data-index="${index}">Remove</button>
+          `;
+          petsList.appendChild(petItem);
+        });
+        
+        // Add event listeners to remove buttons
+        document.querySelectorAll(".remove-btn").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            const index = e.target.getAttribute("data-index");
+            removePet(index);
+          });
+        });
+      }
+      
+      // Add a new pet
+      function addPet(name, type, image) {
+        const newPet = {
+          name,
+          type,
+          image
+        };
+        
+        pets.push(newPet);
+        localStorage.setItem("pets", JSON.stringify(pets));
+        displayPets();
+      }
+      
+      // Remove a pet
+      function removePet(index) {
+        pets.splice(index, 1);
+        localStorage.setItem("pets", JSON.stringify(pets));
+        displayPets();
+      }
+      
+      // Form submission
+      addPetForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById("pet-name").value.trim();
+        const type = document.getElementById("pet-type").value.trim();
+        const image = document.getElementById("pet-image").value.trim();
+        
+        if (name && type) {
+          addPet(name, type, image);
+          addPetForm.reset();
+        }
+      });
+      
+      // Initial display
+      displayPets();
+    });
+  </script>
+</body>
+</html>

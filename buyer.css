@@ -1,0 +1,39 @@
+/* buyer/buyer.css */
+.buyer-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .buyer-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .pet-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    background: #f9f9f9;
+  }
+  
+  .pet-card h3 {
+    margin-top: 0;
+  }
+  
+  .pet-card button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pet-card button:hover {
+    background: #45a049;
+  }

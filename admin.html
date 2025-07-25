@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="admin.css">
+  <script defer src="admin.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffcc66, #ff9966);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .logout {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #ff4d4d;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .logout:hover {
+      transform: scale(1.1);
+    }
+
+    .admin-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.3);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .admin-logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      animation: bounce 1.5s infinite alternate;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+
+    .dashboard {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .dashboard-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease-in-out;
+      cursor: pointer;
+    }
+
+    .dashboard-item:hover {
+      transform: scale(1.05);
+    }
+
+    .dashboard-item img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1rem;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="logout">Logout</div>
+
+  <div class="admin-container">
+    <img src="https://t4.ftcdn.net/jpg/04/75/00/99/240_F_475009987_zwsk4c77x3cTpcI3W1C1LU4pOSyPKaqi.jpg" alt="Admin Logo" class="admin-logo">
+    <h2>Admin Dashboard</h2>
+
+    <div class="dashboard">
+      <div class="dashboard-item" onclick="window.location.href='../manage_users/manage_users.html'">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s" alt="User Logo">
+        <h3>Manage Users</h3>
+      </div>
+      
+      <div class="dashboard-item" onclick="window.location.href='../manage_pets/manage_pets.html'">
+        <img src="https://t4.ftcdn.net/jpg/04/17/87/67/360_F_417876741_pofg19rDWTv6ZmgQ8qTOgVMJ0H3N2uPh.jpg" alt="Pet Logo">
+        <h3>Manage Pets</h3>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
